@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentPlanner.Data;
 
 namespace TournamentPlanner.Migrations
 {
     [DbContext(typeof(TournamentPlannerDbContext))]
-    partial class TournamentPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210113150818_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,10 +28,10 @@ namespace TournamentPlanner.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("Player1ID")
+                    b.Property<int?>("Player1ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Player2ID")
+                    b.Property<int?>("Player2ID")
                         .HasColumnType("int");
 
                     b.Property<int>("Round")
@@ -73,20 +75,15 @@ namespace TournamentPlanner.Migrations
                 {
                     b.HasOne("TournamentPlanner.Data.Player", "Player1")
                         .WithMany()
-                        .HasForeignKey("Player1ID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("Player1ID");
 
                     b.HasOne("TournamentPlanner.Data.Player", "Player2")
                         .WithMany()
-                        .HasForeignKey("Player2ID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("Player2ID");
 
                     b.HasOne("TournamentPlanner.Data.Player", "Winner")
                         .WithMany()
-                        .HasForeignKey("WinnerID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("WinnerID");
 
                     b.Navigation("Player1");
 
